@@ -1,57 +1,83 @@
-function GameBoard() {
+const GameBoard = (() => {
     let gameBoard = [];
     //create board & it's grid *NEED THIS*
     const rows = 3;
     const cols = 3;
-    let gridNo = 0;
 
     for(let i = 0; i < rows; i++) { //row
         gameBoard[i] = [];
         for(let j = 0; j < cols; j++) {//cols
-            gameBoard[i].push(Cell().getValue());
+            gameBoard[i].push(Grid().getValue());
             getGameGrid();
-            gridNo++;
         }
     }
     const getBoard = () => gameBoard;
-
-    const resetBoard = () => {
+    
+    function getGameGrid() {
+        const gameGridElement = document.createElement('div');
+        gameGridElement.classList.add('gameGrid');
+        document.getElementById('gameBoard').appendChild(gameGridElement);
+        return gameGridElement;
+    }
+    
+    const restartBoard = () => {
         gameBoard.fill("");
+        getBoard();
+    }
 
-    };
-
-    return { getBoard, resetBoard};
-}
-function Cell() {
+    return { getBoard, restartBoard};
+})();
+function Grid() {
     let value = "";
     let getValue = () => value;
     let getMarker = (marker) => (value = marker);
     return { getValue, getMarker };
 }
 
-function getGameGrid() {
+const displayController = (()=> {
+    const messageElement = document.getElementById('message');
+    const gameGridElement = document.getElementsByClassName('gameGrid');
+
+    const setMessageElement = (message) => {
+        messageElement.textContent = message;
+    }
+
+    return { setMessageElement}
+})();
+
+const gameController = (() => {
+
+    displayController.setMessageElement('HelloBye');
+
+})();
+
+
+/*
+const displayController = (() =>{
     const gameGridElement = document.createElement('div');
     gameGridElement.classList.add('gameGrid');
     document.getElementById('gameBoard').appendChild(gameGridElement);
-    gameGridElement.addEventListener('click', (event)=> {
-        const { target } = event;
-        alert("hi");
-    })
-    return gameGridElement;
-}
+    const gameGrid = document.getElementsByClassName('gameGridElement');
+
+
+    return { gameGridElement };
+})();*/
+
+
+
 
 function createPlayer(name, marker, score) {
-    return { name, marker, score };
-}
-
-const player1 = createPlayer('Player 1', "O", 0);
-const player2 = createPlayer('Player 2', "X", 0);
-
-function displayController() {
-
+    return { name, marker, score}
 }
 
 
+/*
+function GameController() {
+    const player1 = createPlayer("Player 1", "O", 0);
+    const player2 = createPlayer("Player 2", "X", 0);
+    const players = [player1, player2];
+    let currentPlayer = players[0];
+    GameBoard();
 
-GameBoard();
-displayController();
+}
+GameController();*/
