@@ -1,4 +1,3 @@
-
 function GameBoard() {
     let gameBoard = [];
     //create board & it's grid *NEED THIS*
@@ -18,7 +17,7 @@ function GameBoard() {
 
     const resetBoard = () => {
         gameBoard.fill("");
-        getBoard();
+
     };
 
     return { getBoard, resetBoard};
@@ -34,6 +33,10 @@ function getGameGrid() {
     const gameGridElement = document.createElement('div');
     gameGridElement.classList.add('gameGrid');
     document.getElementById('gameBoard').appendChild(gameGridElement);
+    gameGridElement.addEventListener('click', (event)=> {
+        const { target } = event;
+        alert("hi");
+    })
     return gameGridElement;
 }
 
@@ -47,6 +50,7 @@ const player2 = createPlayer('Player 2', "X", 0);
 function displayController() {
 
 }
+
 
 
 GameBoard();
