@@ -1,0 +1,60 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    padding: 50px;
+    display: grid;
+    grid-template-columns: repeat(5, 150px);
+    grid-template-rows: 150px, 450px;
+    grid-template-areas:
+        'header header header header header'
+        'sidebar1 main main main sidebar2'
+        '. extra extra extra .';
+}
+.heading {
+    grid-area: header;
+}
+.player1 {
+    grid-area: sidebar1;
+}
+.player2 {
+    grid-area: sidebar2;
+}
+.gameBoard {
+    grid-area: main;
+    height: 500px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr .2fr;
+    justify-items: center;
+    align-items: center;
+}
+.gameGrid { 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 100px;
+    width: 100%;
+    height: 100%;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    cursor: pointer;
+}
+.gameGrid:nth-child(3n) {
+    border-right: none;
+}
+.gameGrid:nth-child(n + 7) {
+    border-bottom:none;
+}
+.gameGrid:hover {
+    background-color: aquamarine;
+}
+/*buttons*/
+.others {
+    width: 100%;
+    grid-area: extra;
+    justify-items: center;
+    align-items: center;
+}
