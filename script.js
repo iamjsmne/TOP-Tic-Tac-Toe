@@ -9,6 +9,7 @@ const GameBoard = (() => {
         for(let j = 0; j < cols; j++) {//cols
             gameBoard[i].push(Grid().getValue());
             getGameGrid();
+            
         }
     }
     const getBoard = () => gameBoard;
@@ -17,16 +18,10 @@ const GameBoard = (() => {
         const gameGridElement = document.createElement('div');
         gameGridElement.classList.add('gameGrid');
         document.getElementById('gameBoard').appendChild(gameGridElement);
-
         return gameGridElement;
     }
-    
-    const resetBoard = () => {
-        gameBoard.fill("");
-        getBoard();
-    }
 
-    return { getBoard, resetBoard};
+    return { getBoard};
 })();
 function Grid() {
     let value = "";
@@ -38,7 +33,7 @@ function createPlayer(name, marker, score) {
     return { name, marker, score}
 }
 
-const DisplayController = (()=> {
+const DisplayController = ()=> {
     const messageElement = document.getElementById('message');
     const resetBtnElement = document.getElementById('resetButton');
     /*const player1Score = document.getElementById('player1Score');
@@ -47,14 +42,13 @@ const DisplayController = (()=> {
     const setMessage = (message) => {
         messageElement.textContent = message;
     }
-
     resetBtnElement.addEventListener('click', () => {
         GameBoard.resetBoard();
+        alert("sup");
     });
-    
 
     return { setMessage }
-})();
+};
 
 /*
 const displayController = (() =>{
@@ -76,14 +70,13 @@ function GameController() {
     const player2 = createPlayer("Player 2", "X", 0);
     const players = [player1, player2];
     let currentPlayer = players[0];
-    
+    let gameBoard = GameBoard;
     const switchPlayer = () => {
         if(currentPlayer === players[0]) {
             currentPlayer = players[1];
         } else {
             currentPlayer = players[0];
         }
-        displayController.setMessageElement(`${currentPlayer.name}'s turn!`);
     }
 
     const checkBoard = () => {
@@ -114,7 +107,25 @@ function GameController() {
             alert('It\'s a draw!');
         }
     }
+    const resetGame = () => {
 
+    }
+
+    document.addEventListener("click", function(event){
+        let grid = event.target;
+        if (grid.className =='gameGrid') {
+            if (grid.textContent === "") {
+                grid.textContent = currentPlayer.marker;
+                switchPlayer();
+            } else {
+                checkBoard();
+                return;
+            }
+            
+        }
+    });
     return { switchPlayer, checkBoard }
 }
+
+DisplayController();
 GameController();
