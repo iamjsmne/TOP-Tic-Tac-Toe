@@ -42,13 +42,16 @@ const DisplayController = (() => {
     const changeMessage = (player) => { //works
         headerMessage.textContent = `${player}'s turn!`;
     };
+    const winnerMessage = (player) => {
+        headerMessage.textContent = `Congrates! ${player} won!`;
+    }
 
     resetBtn.addEventListener('click', () => {
         GameBoard.resetGameBoard(); //linked
         GameController.resetGame();
     })
 
-    return { headerMessage, changeMessage }
+    return { headerMessage, changeMessage, winnerMessage }
 })();
 
 const createPlayer = (name,marker) => {
@@ -57,11 +60,12 @@ const createPlayer = (name,marker) => {
 
 const GameController = (() => {
     const gameBoard = document.getElementById('game-board');
-
+    
     const playerOne = createPlayer("Player One", "X");
     const playerTwo = createPlayer("Player Two", "O");
     const players = [playerOne, playerTwo];
     let currentPlayer = players[0];
+    let isGameOver = false;
     
     const resetGame= () => {
         gameBoard.addEventListener('click', playGame, true);
@@ -106,8 +110,9 @@ const GameController = (() => {
                 GameBoard.gameBoard[position1] === GameBoard.gameBoard[position2] && 
                 GameBoard.gameBoard[position1] === GameBoard.gameBoard[position3]
             ) {
-                alert(`${GameBoard.gameBoard[position1]}'s wins!`);
+                alert(`${currentPlayer.name} wins!`);
                 gameBoard.removeEventListener('click', playGame, true);
+                isGameOver = true;
                 return;
                  //this prevents allCellsUsed from alert it's a draw
             }
@@ -116,6 +121,7 @@ const GameController = (() => {
         const allCellsUsed = GameBoard.gameBoard.every(cell => cell !== '');
         if(allCellsUsed) {
             alert(`It's a draw!`);
+            isGameOver = true;
         }
     }
     
@@ -128,7 +134,14 @@ const GameController = (() => {
                 GameBoard.gameBoard[gridId] = currentPlayer.name;
                 updateGameBoard(gridId, currentPlayer.marker);
                 checkBoard();
-                switchPlayer();
+                if(isGameOver) { true
+                    DisplayController.winnerMessage(currentPlayer.name);
+                    isGameOver = false;
+                } else {
+                    switchPlayer();
+                    DisplayController.changeMessage(currentPlayer.name);
+                }
+
             }
         }
     }
