@@ -50,12 +50,16 @@ const DisplayController = (() => {
         headerMessage.textContent = `${player} start!`;
     }
 
+    const drawMessage = () => {
+        headerMessage.textContent = 'It\'s a draw! Play again!';
+    }
+
     resetBtn.addEventListener('click', () => {
         GameBoard.resetGameBoard(); //linked
         GameController.resetGame();
     })
 
-    return { headerMessage, changeMessage, winnerMessage, newRoundMessage }
+    return { headerMessage, changeMessage, winnerMessage, newRoundMessage, drawMessage }
 })();
 
 const createPlayer = (name,marker) => {
@@ -70,6 +74,7 @@ const GameController = (() => {
     const players = [playerOne, playerTwo];
     let currentPlayer = players[0];
     let isGameOver = false;
+    let isDraw = false;
     
     const resetGame= () => {
         gameBoard.addEventListener('click', playGame, true);
@@ -125,6 +130,7 @@ const GameController = (() => {
         const allCellsUsed = GameBoard.gameBoard.every(cell => cell !== '');
         if(allCellsUsed) {
             alert(`It's a draw!`);
+            isDraw = true;
             isGameOver = true;
         }
     }
@@ -138,16 +144,18 @@ const GameController = (() => {
                 GameBoard.gameBoard[gridId] = currentPlayer.name;
                 updateGameBoard(gridId, currentPlayer.marker);
                 checkBoard();
-                if(isGameOver) { true
+                if(isGameOver && isDraw) {
+                    DisplayController.drawMessage();
+                    currentPlayer = players[0];
+                } else if (isGameOver) {
                     DisplayController.winnerMessage(currentPlayer.name);
                     isGameOver = false;
                 } else {
                     switchPlayer();
                     DisplayController.changeMessage(currentPlayer.name);
                 }
-
-            }
-        }
+            };
+        };
     }
     
     const getCurrentPlayer = () => alert(currentPlayer.name); //testing purpose
