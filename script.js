@@ -29,7 +29,6 @@ const GameBoard = (() => {
         gameBoard.fill("");
         gridNo = 0;
         gameBoard.forEach(() => createGameGrid());
-        gameBoard.addEventListener('click', GameController.grids, true);
     }
 
     console.log(gameBoard);
@@ -46,6 +45,7 @@ const DisplayController = (() => {
 
     resetBtn.addEventListener('click', () => {
         GameBoard.resetGameBoard(); //linked
+        GameController.resetGame();
     })
 
     return { headerMessage, changeMessage }
@@ -57,14 +57,16 @@ const createPlayer = (name,marker) => {
 
 const GameController = (() => {
     const gameBoard = document.getElementById('game-board');
-    const controller = new AbortController();
-    const { signal } = controller;
+    const resetBtn = document.getElementById('reset-button');
 
     const playerOne = createPlayer("Player One", "O");
     const playerTwo = createPlayer("Player Two", "X");
     const players = [playerOne, playerTwo];
     let currentPlayer = players[0];
     
+    const resetGame= () => {
+        gameBoard.addEventListener('click', playGame, true);
+    }
     const switchPlayer = () => {
         if(currentPlayer === players[0]) {
             currentPlayer = players[1];
@@ -73,21 +75,8 @@ const GameController = (() => {
         }
     }
 
-    gameBoard.addEventListener('click', grids, true);
-    
-    function grids(e) {
-        let grid = e.target;
-        let gridId = grid.id;
-        if(grid.className == 'game-cell') {
-            if(grid.textContent === "") {
-                grid.textContent = currentPlayer.marker;
-                GameBoard.gameBoard[gridId] = currentPlayer.name;
-                updateGameBoard(gridId, currentPlayer.marker);
-                checkBoard();
-                switchPlayer();
-            }
-        }
-    }
+    gameBoard.addEventListener('click', playGame, true);
+
     const updateGameBoard = (gridNo, playerMarker) => {
         GameBoard.gameBoard[gridNo] = playerMarker;
         return GameBoard.getGameBoard;
@@ -117,7 +106,7 @@ const GameController = (() => {
                 GameBoard.gameBoard[position1] === GameBoard.gameBoard[position3]
             ) {
                 alert(`${GameBoard.gameBoard[position1]}'s wins!`);
-                gameBoard.removeEventListener('click', grids, true);
+                gameBoard.removeEventListener('click', playGame, true);
                 return;
                  //this prevents allCellsUsed from alert it's a draw
             }
@@ -128,8 +117,26 @@ const GameController = (() => {
             alert(`It's a draw!`);
         }
     }
+
+    
+    
+    function playGame(e) {
+        let grid = e.target;
+        let gridId = grid.id;
+        if(grid.className == 'game-cell') {
+            if(grid.textContent === "") {
+                grid.textContent = currentPlayer.marker;
+                GameBoard.gameBoard[gridId] = currentPlayer.name;
+                updateGameBoard(gridId, currentPlayer.marker);
+                checkBoard();
+                switchPlayer();
+            }
+        }
+    }
     
     const getCurrentPlayer = () => alert(currentPlayer.name); //testing purpose
 
-    return{ switchPlayer, getCurrentPlayer, updateGameBoard, checkBoard}
+    return{ gameBoard, switchPlayer, getCurrentPlayer, updateGameBoard, checkBoard, playGame, resetGame}
 })();
+
+
