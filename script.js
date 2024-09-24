@@ -65,7 +65,9 @@ const GameController = (() => {
     
     const resetGame= () => {
         gameBoard.addEventListener('click', playGame, true);
+        currentPlayer = players[0];
     }
+
     const switchPlayer = () => {
         if(currentPlayer === players[0]) {
             currentPlayer = players[1];
@@ -116,8 +118,6 @@ const GameController = (() => {
             alert(`It's a draw!`);
         }
     }
-
-    
     
     function playGame(e) {
         let grid = e.target;
