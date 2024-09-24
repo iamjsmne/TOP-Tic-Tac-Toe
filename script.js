@@ -46,12 +46,16 @@ const DisplayController = (() => {
         headerMessage.textContent = `Congrates! ${player} won!`;
     }
 
+    const newRoundMessage = (player) => {
+        headerMessage.textContent = `${player} start!`;
+    }
+
     resetBtn.addEventListener('click', () => {
         GameBoard.resetGameBoard(); //linked
         GameController.resetGame();
     })
 
-    return { headerMessage, changeMessage, winnerMessage }
+    return { headerMessage, changeMessage, winnerMessage, newRoundMessage }
 })();
 
 const createPlayer = (name,marker) => {
@@ -69,7 +73,7 @@ const GameController = (() => {
     
     const resetGame= () => {
         gameBoard.addEventListener('click', playGame, true);
-        currentPlayer = players[0];
+        DisplayController.newRoundMessage(currentPlayer.name);
     }
 
     const switchPlayer = () => {
