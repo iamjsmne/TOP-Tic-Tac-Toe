@@ -57,10 +57,9 @@ const createPlayer = (name,marker) => {
 
 const GameController = (() => {
     const gameBoard = document.getElementById('game-board');
-    const resetBtn = document.getElementById('reset-button');
 
-    const playerOne = createPlayer("Player One", "O");
-    const playerTwo = createPlayer("Player Two", "X");
+    const playerOne = createPlayer("Player One", "X");
+    const playerTwo = createPlayer("Player Two", "O");
     const players = [playerOne, playerTwo];
     let currentPlayer = players[0];
     
