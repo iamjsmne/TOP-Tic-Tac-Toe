@@ -1,57 +1,76 @@
 @import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
-
-
+:root {
+    --orange: #E77843;
+    --light-orange: #EE9B69;
+    --light: #EAD1B5;
+    --teal: #79C39E;
+    --dark: #383431;
+}
 * {
     box-sizing: border-box;
+    background-color: var(--light);
+    color: #383431;
 }
 body {
     margin: auto;
-    padding: auto;
+    margin-top: 100px;
+    padding: 50px;
     display: grid;
     width: 750px;
     height: 750px;
-    border: 1px solid rgb(148, 146, 146);
     grid-template-columns: 1fr 4fr 1fr;
     grid-template-rows: 1fr 4fr .2fr;
     grid-template-areas:
     "header header header"
     "playerone gameboard playertwo"
-    ". button .";
-    gap: 10px;
+    "button button button";
     font-family: "Nunito Sans", sans-serif;
     text-transform: uppercase;
+    background-color: #EE8B69;
+    border-radius: 50px;
+    border:8px solid var(--teal);
+    outline: 4px solid var(--dark);
+    outline-offset: 8px;
 }
 .header {
     grid-area: header;
-    background-color: aqua;
+    border-top-right-radius: 50px;
+    border-top-left-radius: 50px;
+    border-right: 2px solid var(--dark);
+    border-left: 2px solid var(--dark);
+    border-top: 2px solid var(--dark);
 }
 #title {
     font-size: 3rem;
     font-weight: 800;
     text-align: center;
-    margin-bottom: -10px;
+    margin-bottom: -30px;
+    border-radius: 50px;
 }
 #header-message {
     text-align: center;
     font-size: 1.5rem;
-    margin: 0; 
 }
 .player-one {
     grid-area: playerone;
     text-align: center;
+    border-left: 2px solid var(--dark);
 }
 #game-board {
     grid-area: gameboard;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    border: 2px solid pink;
     padding: 10px;
+    background-color: var(--orange);
+    border: 2px solid var(--dark);
+    border-radius: 5px;
 }
 .player-two {
     grid-area: playertwo;
     text-align: center;
+    border-right: 2px solid var(--dark);
 }
 #player-one-marker,
 #player-two-marker {
@@ -66,14 +85,15 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 100px;
+    font-size: 5rem;
     width: 100%;
     height: 100%;
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
+    border-right: 1px solid var(--light);
+    border-bottom: 1px solid VAR(--light);
     font-family: "Shadows Into Light", cursive;
     font-weight: 600;
     font-style: normal;
+    background-color: var(--teal);
 }
   
 .game-cell:nth-child(3n) {
@@ -83,27 +103,40 @@ body {
     border-bottom: none;
 }
 .game-cell:hover {
-    background-color: pink;
     cursor: pointer;
+    background-color: var(--light);
+    opacity: .8;
 }
 .button {
     grid-area: button;
-    margin: auto;
+    width: 100%;
+    padding: 10px;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    background-color: var(--light);
+    border-right: 2px solid var(--dark);
+    border-left: 2px solid var(--dark);
+    border-bottom: 2px solid var(--dark);
 }
 button {
     justify-items: center;
     align-items: center;
-    background-color: white;
-    border: 1px solid black;
-    color: plum;
+    background-color: var(--light-orange);
+    border: none;
+    outline: 1px solid var(--orange);
+    outline-offset: 2px;
     padding: 10px 15px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 1rem;
     text-transform: uppercase;
-    border-radius: 8px;
+    border-radius: 8px;   
+    margin: 0 auto;
+    display: block;
 }
 button:hover {
-    background-color: aqua;
+    background-color: var(--teal);
+    outline: 1px solid var(--light);
+    outline-offset: -5px;
 }
